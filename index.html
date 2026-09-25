@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>IndexedDB 批量写入演示（1 万条）</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main class="container">
+    <h1>IndexedDB 批量写入演示</h1>
+    <p class="sub">10,000 条记录 · Web Worker 写入 · Canvas 进度 · 断点恢复 · 失败重试</p>
+
+    <div id="msg" class="msg"></div>
+
+    <section class="panel">
+      <div class="layout">
+        <canvas id="progress-canvas" width="220" height="220"></canvas>
+        <div class="stats">
+          <div class="stat"><span class="label">进度</span><span id="stat-done" class="value">0 / 10000</span></div>
+          <div class="stat"><span class="label">百分比</span><span id="stat-pct" class="value">0.0%</span></div>
+          <div class="stat"><span class="label">成功</span><span id="stat-success" class="value ok">0</span></div>
+          <div class="stat"><span class="label">失败</span><span id="stat-failed" class="value err">0</span></div>
+        </div>
+      </div>
+
+      <div class="controls">
+        <button id="btn-start" class="primary">开始写入</button>
+        <button id="btn-retry" disabled>重试失败项</button>
+        <button id="btn-reset">重置</button>
+      </div>
+
+      <details class="chaos">
+        <summary>故障模拟（用于验收）</summary>
+        <label class="chk">
+          <input type="checkbox" id="chk-abort">
+          写入时随机中断事务（约 5% 的事务被 abort，自动逐条重试并产生失败项）
+        </label>
+        <div class="chaos-btns">
+          <button id="btn-deldb">模拟删除数据库</button>
+          <button id="btn-bump">模拟外部升级版本（触发版本冲突）</button>
+        </div>
+      </details>
+    </section>
+
+    <section class="panel">
+      <h2>事件日志</h2>
+      <ul id="log" class="log"></ul>
+    </section>
+  </main>
+  <script src="main.js"></script>
+</body>
+</html>
