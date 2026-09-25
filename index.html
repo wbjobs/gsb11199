@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>IndexedDB 批量写入 Demo（1 万条）</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main class="container">
+    <h1>IndexedDB 批量写入 Demo</h1>
+    <p class="desc">Web Worker + IndexedDB 分批写入 10,000 条记录，Canvas 展示进度，支持失败重试与刷新恢复。</p>
+
+    <div id="banner" class="banner"></div>
+
+    <div id="resume-bar" class="resume-bar">
+      <span id="resume-info"></span>
+      <button id="btn-resume">继续写入</button>
+    </div>
+
+    <section class="panel">
+      <canvas id="progress-canvas" width="640" height="48"></canvas>
+      <div class="stats">
+        <div class="stat ok">成功 <strong id="stat-done">0</strong></div>
+        <div class="stat bad">失败 <strong id="stat-failed">0</strong></div>
+        <div class="stat">待写入 <strong id="stat-pending">0</strong></div>
+        <div class="stat">状态 <strong id="stat-status">空闲</strong></div>
+      </div>
+    </section>
+
+    <section class="panel controls">
+      <label class="rate">
+        模拟失败率
+        <input id="fail-rate" type="range" min="0" max="30" value="5">
+        <span id="fail-rate-label">5%</span>
+      </label>
+      <div class="buttons">
+        <button id="btn-start" class="primary">开始写入 10,000 条</button>
+        <button id="btn-retry" disabled>重试失败项</button>
+        <button id="btn-reinit">重新初始化</button>
+        <button id="btn-conflict" class="ghost">模拟版本冲突</button>
+        <button id="btn-delete-db" class="danger">删除数据库</button>
+      </div>
+    </section>
+
+    <section class="panel">
+      <h2>日志</h2>
+      <div id="log" class="log"></div>
+    </section>
+  </main>
+  <script src="app.js"></script>
+</body>
+</html>
